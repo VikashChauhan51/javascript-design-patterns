@@ -1,1 +1,1 @@
-# venturehulk
+# Javascript Design Patterns
