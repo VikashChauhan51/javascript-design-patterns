@@ -79,12 +79,13 @@ function Observer(name){
   };
 
   //Lets create demo
-  //subject
+  //ConcreteSubject (you can extend this subject function with other function to make a new concrete Subject)
   var mySubject=new Subject();
+  //ConcreteObserver (you can extend this Observer function with other function to make a new concrete Observer)
   var obj1=new Observer("obj1");
   var obj3=new Observer("obj3");
   var obj2=new Observer("obj2");
-//Observers
+
   mySubject.addObserver(obj1);
   mySubject.addObserver(obj2);
   mySubject.addObserver(obj3);
@@ -92,3 +93,28 @@ function Observer(name){
   mySubject.notify("hello");
   mySubject.removeObserver(obj3);
   mySubject.notify("bye");
+
+  //Lets try with extended object
+
+  // Extend an object with an extension
+function extend( obj, extension ){
+    for ( var key in extension ){
+      obj[key] = extension[key];
+    }
+  };
+
+  var Task=function (name){
+      this.name;
+      this.completed=false;
+  }
+var myTask=new Task("demo task");
+  // Extend the checkbox with the Observer class
+  extend( myTask, new Observer(myTask.name) );
+ 
+  // Override with custom update behaviour
+  myTask.update = function( value ){
+    this.completed = value;
+  };
+  mySubject.addObserver(myTask);
+  mySubject.notify(true);
+  console.log("myTask",myTask.completed);
